@@ -1,7 +1,24 @@
-from stt import stt
-from tts import tts
-from logic import logic
+import argparse
 import json
+
+parser = argparse.ArgumentParser(description="Run Melissa with console or voice I/O.")
+parser.add_argument(
+    "--mode",
+    choices=("type", "speak"),
+    help="I/O mode: type for console input/output, speak for microphone/audio.",
+)
+args = parser.parse_args()
+
+from stt import console_stt, stt
+from tts import console_tts, tts
+from logic import logic
+
+if args.mode == "type":
+    get_user_input = console_stt
+    output_response = console_tts
+else:
+    get_user_input = stt
+    output_response = tts
 
 # Load the profile.json file
 with open("profile.json") as f:
@@ -70,14 +87,14 @@ messages.append({
     'content': f"Hello, my name is {name}",
 })
 
-# Get and speak initial response
+# Get and output initial response
 llm_response = logic(messages)
 
-tts(llm_response.content)
+output_response(llm_response.content)
 
 while True:
     try:
-        userInput = stt()
+        userInput = get_user_input()
         if not userInput:
             print("No input detected. Ending conversation...")
             break
@@ -92,9 +109,9 @@ while True:
             'content': userInput,
         })
 
-        # Get and speak new response
+        # Get and output new response
         llm_response = logic(messages)
-        tts(llm_response.content)
+        output_response(llm_response.content)
 
     except Exception as e:
         print(f"An error occurred: {str(e)}")
