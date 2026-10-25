@@ -1,3 +1,4 @@
+import inspect
 import re
 from ollama import chat, ChatResponse
 from plugins.getDateAndTime import get_current_date, get_current_time
@@ -54,7 +55,7 @@ def logic(messages):
                         "description": "The user's query about HackerNews stories"
                     }
                 },
-                "required": ["query"]
+                "required": []
             }
         }
     },
@@ -93,7 +94,14 @@ def logic(messages):
     tool_outputs = []
     for tool in response.message.tool_calls:
         if function_to_call := available_functions.get(tool.function.name):
-            output = function_to_call(**tool.function.arguments)
+            # Drop arguments the model invented that the function doesn't accept
+            accepted = inspect.signature(function_to_call).parameters
+            arguments = {
+                key: value
+                for key, value in (tool.function.arguments or {}).items()
+                if key in accepted
+            }
+            output = function_to_call(**arguments)
             if output:
                 tool_outputs.append({
                     'role': 'tool',
