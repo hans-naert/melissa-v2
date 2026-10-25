@@ -35,7 +35,7 @@ def fetch_top_stories(limit: int = 5) -> List[Dict]:
         return []
 
 
-def get_hackernews_info(query: str) -> str:
+def get_hackernews_info(query: str = "") -> str:
     """Process user query and return HackerNews information"""
     # Default to 5 stories if no number specified
     limit = 5
