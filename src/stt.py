@@ -1,12 +1,18 @@
 import sys
 import os
-from vosk import Model, KaldiRecognizer, SetLogLevel
-import pyaudio
 import json
 import time
 
 
+def console_stt():
+    """Read user input from the console."""
+    return input("You: ")
+
+
 def stt():
+    from vosk import Model, KaldiRecognizer, SetLogLevel
+    import pyaudio
+
     SetLogLevel(-1)  # Disable Vosk logging
     # Load the Vosk model
     model = Model("model")
