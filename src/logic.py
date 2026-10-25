@@ -187,7 +187,7 @@ def logic(messages):
     }]
 
     # Get initial response
-    response = chat(model='qwen3:1.7b', messages=messages, tools=tools)
+    response = chat(model='qwen-pi', messages=messages, tools=tools)
 
     # Clean the response content
     if 'content' in response.message and response.message['content']:
@@ -221,7 +221,7 @@ def logic(messages):
         # Add the tool outputs
         messages.extend(tool_outputs)
 
-        final_response = chat('qwen3:1.7b', messages=messages, tools=tools)
+        final_response = chat('qwen-pi', messages=messages, tools=tools)
 
         # Clean the final response content
         if 'content' in final_response.message and final_response.message['content']:
