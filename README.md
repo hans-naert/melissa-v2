@@ -4,6 +4,17 @@ Melissa is a virtual AI assistant for macOS, Windows, and Linux systems. It uses
 
 The code is part of the book - Building a Virtual Assistant for Raspberry Pi (Edition 2), written by [Harshil Agrawal](https://harshil.dev) and [Tanay Pant](https://github.com/tanay1337).
 
+## Running
+
+Run Melissa with `python src/main.py`. At startup, choose `type` to enter messages and read replies in the console, or `speak` to use the microphone and audio output. You can skip the prompt by specifying a mode:
+
+```sh
+python src/main.py --mode type
+python src/main.py --mode speak
+```
+
+In either mode, an empty input ends the conversation.
+
 ## Support
 
 If you run into any problems, please open up a new issue.

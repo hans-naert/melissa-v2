@@ -6,6 +6,11 @@ import json
 import time
 
 
+def console_stt():
+    """Read user input from the console."""
+    return input("You: ")
+
+
 def stt():
     SetLogLevel(-1)  # Disable Vosk logging
     # Load the Vosk model

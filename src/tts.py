@@ -3,6 +3,11 @@ import sys
 import shlex
 
 
+def console_tts(message):
+    """Print a response to the console instead of speaking it."""
+    print(f"Melissa: {message}")
+
+
 def tts(message):
     """
     This function takes a message as an argument and converts it to speech depending on the OS.
